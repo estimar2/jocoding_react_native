@@ -1,2 +1,2 @@
-# jocoding_react_native
-JoCoding React Native Expo
+# nomadcoders react-native for beginners
+[nomadcoders react-native for beginners](https://nomadcoders.co/react-native-for-beginners)
