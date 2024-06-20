@@ -1,14 +1,47 @@
+import { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View, Dimensions } from "react-native";
+
+import * as Location from "expo-location";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function App() {
+  const [location, setLocation] = useState();
+  const [ok, setOk] = useState(true);
+
+  const [city, setCity] = useState("Loading");
+
+  useEffect(() => {
+    ask();
+  }, []);
+
+  const ask = async () => {
+    const { granted } = await Location.requestForegroundPermissionsAsync();
+
+    if (!granted) {
+      setOk(false);
+    }
+
+    const {
+      coords: { latitude, longitude },
+    } = await Location.getCurrentPositionAsync({ accuracy: 5 });
+
+    const location = await Location.reverseGeocodeAsync(
+      { latitude, longitude },
+      {
+        useGoogleMaps: false,
+      },
+    );
+
+    setCity(location[0].city);
+  };
+
   return (
     // Container View 가 Flex Container
     // Flex Direction 기본값은 모두 Column
     <View style={styles.container}>
       <View style={styles.city}>
-        <Text style={styles.cityName}>대전</Text>
+        <Text style={styles.cityName}>{city}</Text>
       </View>
 
       <ScrollView
