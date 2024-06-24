@@ -26,10 +26,12 @@ export default function App() {
       setOk(false);
     }
 
+    // 경도, 위도 찾기
     const {
       coords: { latitude, longitude },
     } = await Location.getCurrentPositionAsync({ accuracy: 5 });
 
+    // 경도, 위도로 주소 찾기
     const location = await Location.reverseGeocodeAsync(
       { latitude, longitude },
       {
@@ -39,6 +41,7 @@ export default function App() {
 
     setCity(location[0].city);
 
+    // 경도, 위도로 날씨 찾기
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`,
     );
@@ -88,7 +91,6 @@ export default function App() {
                   {parseFloat(data.main.temp.toFixed(1))}
                 </Text>
                 <Text style={styles.description}>{data.weather[0].main}</Text>
-                {console.log(data, ">> data")}
                 <Text style={styles.tinyText}>
                   {data.weather[0].description}
                 </Text>
