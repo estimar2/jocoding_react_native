@@ -20,6 +20,7 @@ export default function App() {
   const [city, setCity] = useState("Loading");
 
   const getWeather = async () => {
+    // 사용자 위치 수집 동의
     const { granted } = await Location.requestForegroundPermissionsAsync();
 
     if (!granted) {
@@ -131,6 +132,6 @@ const styles = StyleSheet.create({
     fontSize: 60,
   },
   tinyText: {
-    fontSize: 20,
+    fontSize: 30,
   },
 });
